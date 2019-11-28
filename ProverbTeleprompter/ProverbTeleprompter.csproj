@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommonServiceLocator" Version="2.0.5" />
+    <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
+    <PackageReference Include="Rx-Main" Version="2.3.0-beta2" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="*.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
+  </ItemGroup>
+</Project>
