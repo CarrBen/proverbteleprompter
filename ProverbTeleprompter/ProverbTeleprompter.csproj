@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="*.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>  

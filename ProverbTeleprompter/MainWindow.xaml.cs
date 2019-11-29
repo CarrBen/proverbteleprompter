@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Management;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -10,6 +11,13 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using ProverbTeleprompter.Helpers;
 //using ProverbTeleprompter.WebController;
@@ -19,6 +27,36 @@ using MouseEventHandler = System.Windows.Input.MouseEventHandler;
 
 namespace ProverbTeleprompter
 {
+    [ApiController]
+    public class TestController : Controller
+    {
+        [Route("/test")]
+        public string Test()
+        {
+            return "This is a test";
+        }
+    }
+
+    public class TestStartup : IStartup
+    {
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+
+        public IServiceProvider ConfigureServices(IServiceCollection services)
+        {
+            services.AddRouting();
+            services.AddMvc();
+            return services.BuildServiceProvider();
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -69,6 +107,10 @@ namespace ProverbTeleprompter
 			{
 				//Hosting.Start();
 			}
+
+            var config = new ConfigurationBuilder().AddEnvironmentVariables().Build();
+            var host = new WebHostBuilder().UseConfiguration(config).UseKestrel().UseStartup<TestStartup>().Build();
+            Task.Run(host.Run);
 			
 
         }
